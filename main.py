@@ -8,9 +8,11 @@ def grid_detection():
 
   ##outerBox = cv.CreateMat(sudoku.size(), cv.CV_8UC1)
 
-  outerBox = np.zeros((256, 256, 1), dtype = 'uint8')
+  height, width = sudoku.shape[:2]
 
-  cv2.GaussianBlur(sudoku, (11,11), 0)
+  outerBox = np.zeros((height, width), dtype = 'uint8')
+
+  sudoku = cv2.GaussianBlur(sudoku, (11,11), 0)
 
   #cv2.adaptiveThreshold(sudoku, outerBox, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 5, 2)
 
@@ -22,7 +24,7 @@ def grid_detection():
 
   kernel = np.ones((3,3), np.uint8)
 
-  cv2.dilate(outerBox, kernel, iterations = 1)
+  outerBox = cv2.dilate(outerBox, kernel, iterations = 1)
 
   image_path = 'Images/Results/sudoku-test1.jpg'
 
@@ -38,7 +40,6 @@ def main():
 
   cv2.destroyAllWindows() 
 
-  #cv2.waitKey(1)
 
 if __name__ == '__main__':
     main()
